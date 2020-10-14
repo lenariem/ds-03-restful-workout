@@ -36,7 +36,7 @@ app.get('/fruits/:id', (req, res) => {
 app.post('/fruits', (req, res) => {
   let newFruit = req.body;
   newFruit.id = fruits.length+1 +""; 
-  
+  console.log(req.body);
   fruits.push(newFruit);
   res.json(newFruit);
 });
@@ -55,6 +55,7 @@ app.patch('/fruits/:id', (req, res) => {
   let fields = req.body;
   let foundFruit = fruits.find(fruit => fruit.id === id);
   
+  console.log(req.body);
   if (foundFruit) {
     Object.assign(foundFruit, {...req.body});
     res.send(foundFruit);
@@ -62,6 +63,14 @@ app.patch('/fruits/:id', (req, res) => {
     res.send({message: `Fruit with ID ${id} is not found`});
   }
 });
+
+
+//bonus only names of fruits
+app.get('/names', (req, res) => {
+  let namesArr = fruits.map(fruit => fruit.name);
+  res.send(namesArr);
+});
+
 
 app.listen(5000, () => {
   console.log('Example app listening on port 5000!');
